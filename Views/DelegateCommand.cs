@@ -14,6 +14,7 @@ namespace Morganizer.ViewModels
 
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
+        private bool exportCommandCanExecute;
 
         #endregion // Fields
 
@@ -40,6 +41,11 @@ namespace Morganizer.ViewModels
 
             _execute = execute;
             _canExecute = canExecute;
+        }
+
+        public DelegateCommand(Action<object> execute, bool exportCommandCanExecute) : this(execute)
+        {
+            this.exportCommandCanExecute = exportCommandCanExecute;
         }
 
         #endregion // Constructors
