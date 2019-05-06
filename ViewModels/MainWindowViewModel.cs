@@ -11,9 +11,10 @@ namespace Morganizer.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private Exporter _exp;
-        private string _filepath, _filename;
+        private string _filepath, _filename, _exportresult;
         public string Filepath { get { return _filepath; } set { _filepath = value; OnPropertyChanged(() => Filepath); } }
         public string Filename { get { return _filename; } set { _filename = value; OnPropertyChanged(() => Filename); } }
+        public string ExportResult { get { return _exportresult; } set { _exportresult = value; OnPropertyChanged(() => ExportResult); } }
         public ICommand BrowseCommand { get; private set; }
         public ICommand ExportCommand { get; private set; }
 
@@ -22,6 +23,7 @@ namespace Morganizer.ViewModels
             _exp = new Exporter();
             Filename = "movie_list.xlsx";
             Filepath = "";
+            ExportResult = "";
 
             BrowseCommand = new DelegateCommand(obj => BrowseCommandExecution());
             ExportCommand = new DelegateCommand(obj => ExportCommandExecution(), obj => ExportCommandCanExecute);
@@ -41,7 +43,9 @@ namespace Morganizer.ViewModels
 
         private void ExportCommandExecution()
         {
+            ExportResult = "Exporting ...";
             _exp.Export(_filepath, _filename);
+            ExportResult = "Done!";
         }
 
         private void BrowseCommandExecution()
